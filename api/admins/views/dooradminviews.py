@@ -1,6 +1,6 @@
-from rest_framework import generics, viewsets, permissions, pagination
+from rest_framework        import viewsets, permissions, pagination
 
-from api.doors.models import DoorUseLog
+from api.doors.models      import DoorUseLog
 from api.doors.serializers import DoorUseLogSerializer
 
 class DoorAdminViewSet(viewsets.ModelViewSet):
