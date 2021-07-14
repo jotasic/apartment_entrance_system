@@ -1,7 +1,16 @@
 version: "3"
 services:
+  redis:
+    image: redis
+    ports: "6379:6379"
+    docker run --name some-app --link some-redis:redis -d application-that-uses-redis
+      volumes:
+          - /root/docker/redis-5.0.3/6001:/data
+      command: redis-server /data/redis.conf
   web:
-    image: burnkim61/apartmentsystem
+    build:
+      context: .
+      dockerfile: ./Dockerfile-dev
     ports:
       - "8000:8000"
     depends_on:
@@ -11,7 +20,9 @@ services:
       SQL_HOST: db
     env_file:
       - .dockerenv.web.dev
-    command: python manage.py runserver 0.0.0.0:8000 --settings=apartmentsystem.settings.local
+    command: >
+      sh -c "python manage.py migrate --settings=apartmentsystem.settings.dev &&
+             python manage.py runserver 0.0.0.0:8000 --settings=apartmentsystem.settings.dev"
     volumes:
       - .:/usr/src/app/
   db:
