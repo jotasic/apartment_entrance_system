@@ -1,0 +1,28 @@
+version: "3"
+services:
+  web:
+    image: burnkim61/apartmentsystem
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    restart: always
+    environment:
+      SQL_HOST: db
+    env_file:
+      - .dockerenv.web.dev
+    command: python manage.py runserver 0.0.0.0:8000 --settings=apartmentsystem.settings.local
+    volumes:
+      - .:/usr/src/app/
+  db:
+    image: mysql
+    ports:
+      - "3306:3306"
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+      - --default-authentication-plugin=mysql_native_password
+    volumes:
+      - ./db_data:/var/lib/mysql:rw
+    env_file:
+      - .dockerenv.db.dev

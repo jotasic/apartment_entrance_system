@@ -329,3 +329,9 @@ my_settings.py
 *.csv
 
 db_uploader.py
+
+db_data
+
+.dockerenv.*
+
+setup_env.sh
