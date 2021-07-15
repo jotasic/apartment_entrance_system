@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'rest_auth.registration',
     'api.doors',
     'api.admins',
+    'core',
 ]
 
 MIDDLEWARE = [

@@ -13,9 +13,13 @@ services:
       SQL_HOST: db
     env_file:
       - .dockerenv.web.dev
-    command: >
-      sh -c "python manage.py migrate --settings=apartmentsystem.settings.dev &&
-             python manage.py runserver 0.0.0.0:8000 --settings=apartmentsystem.settings.dev"
+    command:
+      - bash
+      - -c 
+      - |
+        python manage.py wait_for_db --settings=apartmentsystem.settings.dev
+        python manage.py migrate --settings=apartmentsystem.settings.dev
+        python manage.py runserver 0.0.0.0:8000 --settings=apartmentsystem.settings.dev
     volumes:
       - .:/usr/src/app/
   db:
