@@ -1,12 +1,5 @@
 version: "3"
 services:
-  redis:
-    image: redis
-    ports: "6379:6379"
-    docker run --name some-app --link some-redis:redis -d application-that-uses-redis
-      volumes:
-          - /root/docker/redis-5.0.3/6001:/data
-      command: redis-server /data/redis.conf
   web:
     build:
       context: .
